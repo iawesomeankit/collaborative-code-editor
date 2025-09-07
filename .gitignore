@@ -1,0 +1,16 @@
+# Node modules
+backend/node_modules/
+frontend/node_modules/
+
+# Angular build output
+frontend/dist/
+
+# Environment files
+backend/.env
+frontend/src/environments/environment*.ts
+
+# VSCode settings
+.vscode/
+
+# Logs
+*.log
