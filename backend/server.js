@@ -1,15 +1,23 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require('http');
 const { Server } = require('socket.io');
-
 const app = express();
 
-const PORT = 3125;
-
-app.use(cors());
+app.use(cors({
+	origin: (origin, cb) => {
+		if (!origin) return cb(null, true); // allow curl/postman
+		if (allowedOrigins.some(rule =>
+			(rule instanceof RegExp ? rule.test(origin) : rule === origin)
+		)) return cb(null, true);
+		return cb(new Error('Not allowed by CORS'));
+	},
+	credentials: true
+}));
+app.use(express.json());
 app.use(bodyParser.json());
 
 const server = http.createServer(app);
@@ -17,8 +25,18 @@ const io = new Server(server, {
 	cors: { origin: '*' }
 });
 
+// CORS: allow your Vercel domain + localhost while developing
+const allowedOrigins = [
+	'http://localhost:4200',
+	/\.vercel\.app$/        // any *.vercel.app domain
+	// add your custom domain here later, e.g. /^https:\/\/(www\.)?myapp\.com$/
+];
+
+
+const PORT = process.env.PORT || 3125;
+
 // MongoDB connection
-mongoose.connect("mongodb://127.0.0.1:27017/code-collab", {
+mongoose.connect(process.env.MONGO_URI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 })
@@ -29,6 +47,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/code-collab", {
 app.use('/api', require("./routes"));
 
 const rooms = Object.create(null);
+
+app.get('/health', (req, res) => res.send('OK'));
 
 // {
 // 	"room123": {
