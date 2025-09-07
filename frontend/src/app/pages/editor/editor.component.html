@@ -1,0 +1,40 @@
+<div class="editor-container">
+	<div class="editor-header">
+		<h2>Room: {{ roomCode }}</h2>
+		<span>Welcome, {{ userName }}!</span>
+		<button (click)="leaveRoom()" class="btn-leave">Leave Room</button>
+	</div>
+
+	<div class="editor-workspace">
+		<div class="code-panel">
+			<h3>Code Editor</h3>
+			<div class="toolbar">
+				<label for="language">Language: </label>
+				<select id="language" [(ngModel)]="selectedLanguage" (change)="onLanguageChange(selectedLanguage)">
+					<option value="javascript">JavaScript</option>
+					<option value="typescript">TypeScript</option>
+					<option value="python">Python</option>
+					<option value="cpp">C++</option>
+					<option value="java">Java</option>
+				</select>
+				<button (click)="runCode()">Run ▶</button>
+			</div>
+			<ngx-monaco-editor [options]="codeEditorOptions" [(ngModel)]="code" (onInit)="onEditorInit($event)">"
+				class="editor-box">
+			</ngx-monaco-editor>
+		</div>
+
+		<div class="chat-panel">
+			<h3>Team Chat</h3>
+			<div class="chat-messages">
+				<div *ngFor="let message of chatMessages" class="chat-message">
+					<strong>{{ message.sender }}:</strong> {{ message.message }}
+				</div>
+			</div>
+			<div class="chat-input">
+				<input type="text" [(ngModel)]="chatMessage" placeholder="Type a message..." class="chat-input-field" />
+				<button class="btn-send" (click)="sendChatMessage()">Send</button>
+			</div>
+		</div>
+	</div>
+</div>

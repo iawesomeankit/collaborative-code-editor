@@ -1,0 +1,53 @@
+<app-navbar></app-navbar>
+<div class="homepage">
+	<div class="hero-section">
+		<div class="hero-content">
+			<h1 class="hero-title">
+				Collaborative DSA Editor
+				<span class="gradient-text">⚡ Code Together</span>
+			</h1>
+			<p class="hero-subtitle">
+				Practice Data Structures & Algorithms with friends in real-time.
+				Share code, solve problems, and learn together.
+			</p>
+
+			<div class="join-form-container">
+				<form [formGroup]="joinForm" (ngSubmit)="joinRoom()" class="join-form">
+					<h2 class="form-title">Join a Coding Session</h2>
+
+					<div class="input-group">
+						<label for="userName">Your Name</label>
+						<input id="userName" type="text" formControlName="userName" placeholder="Enter your name"
+							class="form-input"
+							[class.error]="joinForm.get('userName')?.invalid && joinForm.get('userName')?.touched" />
+						<div *ngIf="joinForm.get('userName')?.invalid && joinForm.get('userName')?.touched"
+							class="error-message">
+							Name is required (2-20 characters)
+						</div>
+					</div>
+
+					<div class="input-group">
+						<label for="roomCode">Room Code</label>
+						<input id="roomCode" type="text" formControlName="roomCode"
+							placeholder="Enter room code or leave blank to create new" class="form-input"
+							[class.error]="joinForm.get('roomCode')?.invalid && joinForm.get('roomCode')?.touched" />
+						<div *ngIf="joinForm.get('roomCode')?.invalid && joinForm.get('roomCode')?.touched"
+							class="error-message">
+							Room code should be 3-15 characters (letters, numbers, hyphens only)
+						</div>
+					</div>
+
+					<div class="button-group">
+						<button type="submit" class="btn-primary" [disabled]="joinForm.invalid || isLoading">
+							<span *ngIf="!isLoading">
+								{{ joinForm.get('roomCode')?.value ? 'Join Room' : 'Create New Room' }}
+							</span>
+							<span *ngIf="isLoading" class="loading-spinner">⏳ Loading...</span>
+						</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
