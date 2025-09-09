@@ -16,7 +16,7 @@ export class SocketService {
 
 	connect(): void {
 		if (!this.socket) {
-			this.socket = io('http://localhost:3000', { transports: ['websocket'] });
+			this.socket = io('https://collaborative-code-editor-hu9g.onrender.com', { transports: ['websocket'] });
 		}
 	}
 

@@ -7,7 +7,7 @@ import { SocketService } from '../services/socket.service';
 	providedIn: 'root'
 })
 export class CodeService {
-	private apiUrl = 'http://localhost:3000/api/code';
+	private apiUrl = 'https://collaborative-code-editor-hu9g.onrender.com/api/code';
 
 	constructor(
 		private http: HttpClient,
