@@ -15,6 +15,7 @@ export class CodeService {
 	) { }
 
 	saveCode(roomCode: string, content: string, language: string): Observable<any> {
+		console.log("Saving code to server", roomCode, content, language);
 		return this.http.post(`${this.apiUrl}/save`, { roomCode, content, language });
 	}
 
