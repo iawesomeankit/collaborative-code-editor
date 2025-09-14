@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const http = require('http');
 const { Server } = require('socket.io');
 const app = express();
+const { connectToRabbitMQ } = require("./routes/queue");
 
 app.use(cors({
 	origin: (origin, cb) => {
@@ -142,4 +143,9 @@ io.on('connection', socket => {
 
 server.listen(PORT, () => {
 	console.log(`🚀 Server running on http://localhost:${PORT}`);
+	connectToRabbitMQ().then(() => {
+		console.log("✅ Connected to RabbitMQ");
+	}).catch(err => {
+		console.error("❌ RabbitMQ Connection Failed:", err);
+	});
 });
