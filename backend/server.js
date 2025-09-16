@@ -29,6 +29,7 @@ const io = new Server(server, {
 // CORS: allow your Vercel domain + localhost while developing
 const allowedOrigins = [
 	'http://localhost:4200',
+	'https://ank1tpat3l.in',  // my personal website
 	/\.vercel\.app$/        // any *.vercel.app domain
 	// add your custom domain here later, e.g. /^https:\/\/(www\.)?myapp\.com$/
 ];
